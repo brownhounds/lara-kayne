@@ -14,9 +14,6 @@ services:
     build:
       context: ./docker/php-fpm
       dockerfile: Dockerfile
-      args:
-        - USER=root
-        - GROUP=root
     container_name: php-fpm
     restart: unless-stopped
     volumes:
@@ -26,6 +23,9 @@ services:
     build:
       context: ./docker/php-cli
       dockerfile: Dockerfile
+      args:
+        - USER=1000
+        - GROUP=1000
     container_name: php-dev
     restart: unless-stopped
     volumes:
