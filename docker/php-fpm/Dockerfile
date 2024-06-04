@@ -1,11 +1,17 @@
 FROM php:8.3.2-fpm-alpine
 ARG APP_DIR=/var/www/app
 
-RUN apk add -Uuv \
+RUN apk add --no-cache \
     freetype-dev \
     libjpeg-turbo-dev \
     libzip-dev \
     libpng-dev
+
+RUN apk add --no-cache pcre-dev $PHPIZE_DEPS && \
+    pecl update-channels && \
+    pecl install redis && \
+    docker-php-ext-enable redis && \
+    apk del $PHPIZE_DEPS
 
 RUN rm -rf /var/cache/apk/*
 

@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class EnsureApiBearerToken
 {
@@ -20,9 +21,9 @@ class EnsureApiBearerToken
             return $next($request);
         }
 
-        return response([
+        throw new HttpResponseException(response([
             'status' => 401,
             'message' => 'Unauthorized'
-        ], 401);
+        ]), 401);
     }
 }
